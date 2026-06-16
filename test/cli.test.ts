@@ -63,6 +63,38 @@ test("CLI explain prints markdown summary", async () => {
   assert.match(result.stdout, /AI Output Gate Summary/);
 });
 
+test("CLI loop can repair through a user-supplied command without human UI", async () => {
+  const dir = await mkdtemp(path.join(tmpdir(), "ai-output-gates-"));
+  const readme = path.join(dir, "README.md");
+  const outDir = path.join(dir, "loop-report");
+  const repairScript = path.join(dir, "repair.cjs");
+  await writeFile(readme, "# Demo\n\nSomething vague.", "utf8");
+
+  const repaired = "# Demo\\n\\nNo API key. No telemetry. Run locally.\\n\\n## Usage\\n\\n```bash\\nnpm test\\n```\\n\\n## Status\\n\\nAlpha.\\n\\n## License\\n\\nMIT\\n";
+  await writeFile(repairScript, `require("fs").writeFileSync(process.env.AI_OUTPUT_GATES_TARGET, ${JSON.stringify(repaired)});\n`, "utf8");
+  const repairCommand = `${process.execPath} ${repairScript}`;
+
+  const result = await runCli([
+    "loop",
+    readme,
+    "--type",
+    "readme",
+    "--out",
+    outDir,
+    "--max-rounds",
+    "2",
+    "--repair-command",
+    repairCommand,
+  ]);
+
+  assert.equal(result.code, 0);
+  assert.match(result.stdout, /ROUND 1: REVIEW|ROUND 1: FAIL/);
+  assert.match(result.stdout, /ROUND 2: PASS/);
+
+  const finalReport = JSON.parse(await readFile(path.join(outDir, "round-2", "gate-report.json"), "utf8")) as GateReport;
+  assert.equal(finalReport.status, "pass");
+});
+
 function runCli(args: string[]): Promise<{ code: number | null; stdout: string; stderr: string }> {
   return new Promise((resolve) => {
     const child = spawn(process.execPath, [cliPath, ...args], {

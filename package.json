@@ -1,6 +1,6 @@
 {
   "name": "ai-output-gates",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Artifact-specific quality gates for AI-generated books, prose, landing pages, READMEs, and code.",
   "type": "module",
   "homepage": "https://github.com/ban10yuu/ai-output-gates#readme",

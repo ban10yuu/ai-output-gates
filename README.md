@@ -37,6 +37,7 @@ npm run check
 ai-output-gates run <target> --type auto --out .ai-output-gates
 ai-output-gates run manuscript.md --type book
 ai-output-gates run landing.html --type landing-page
+ai-output-gates loop manuscript.md --type book --max-rounds 3 --repair-command "<your-agent-repair-command>"
 ai-output-gates explain .ai-output-gates/gate-report.json
 ```
 
@@ -72,9 +73,11 @@ Use `repair.md` as the next prompt for the agent that produced the weak artifact
 draft -> gate -> repair.md -> agent fixes -> gate again
 ```
 
+`loop` automates that cycle when you provide a repair command. The command receives environment variables such as `AI_OUTPUT_GATES_REPAIR`, `AI_OUTPUT_GATES_REPORT`, `AI_OUTPUT_GATES_TARGET`, and `AI_OUTPUT_GATES_ROUND`. The package itself still makes no hidden LLM/API calls.
+
 ## Status
 
-Alpha. The first release is intentionally local-first and heuristic-based. Future versions can add optional user-provided review commands, but v0.1 makes no hidden LLM/API calls.
+Alpha. The first releases are intentionally local-first and heuristic-based. `loop` can call a repair command you provide, but the package itself makes no hidden LLM/API calls.
 
 ## License
 

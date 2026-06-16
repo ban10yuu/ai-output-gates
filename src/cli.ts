@@ -38,7 +38,7 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
   }
 
   if (first === "--version" || first === "-v") {
-    process.stdout.write("0.1.2\n");
+    process.stdout.write("0.1.3\n");
     return 0;
   }
 

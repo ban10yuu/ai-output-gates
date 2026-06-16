@@ -1,7 +1,7 @@
 {
   "name": "ai-output-gates",
-  "version": "0.1.2",
-  "description": "Artifact-specific quality gates for AI-generated books, prose, landing pages, READMEs, and code.",
+  "version": "0.1.3",
+  "description": "Catch weak AI-generated work before a client, reader, or user sees it.",
   "type": "module",
   "homepage": "https://github.com/ban10yuu/ai-output-gates#readme",
   "repository": {

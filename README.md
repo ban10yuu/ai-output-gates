@@ -1,12 +1,40 @@
 # ai-output-gates
 
-Artifact-specific quality gates for AI-generated books, prose, landing pages, READMEs, and code.
+Catch weak AI-generated work before a client, reader, or user sees it.
+
+`ai-output-gates` is a local CLI that rejects common AI failure modes, writes a concrete repair brief, and can loop that brief back into your agent workflow.
 
 ```bash
 npm exec --yes --package github:ban10yuu/ai-output-gates#main -- ai-output-gates run manuscript.md --type book
 ```
 
 No API key. No telemetry. No human review UI. Runs locally.
+
+## What it catches
+
+- A "book" that is really a short blob with no chapter shape
+- A landing page with no H1, no CTA, no proof, or broken mobile basics
+- A README that does not explain value or show a copyable command
+- A code repo with source files but no tests, no check script, or secret-looking strings
+- Generic prose with no audience, no examples, and repeated filler
+
+## Quick demo
+
+Run the intentionally bad landing page:
+
+```bash
+npm exec --yes --package github:ban10yuu/ai-output-gates#main -- ai-output-gates run examples/weak-landing.html --type landing-page
+```
+
+Expected shape:
+
+```text
+FAIL 2/100 landing-page
+Report: .ai-output-gates/gate-report.json
+Repair brief: .ai-output-gates/repair.md
+```
+
+The generated `repair.md` tells the producing agent exactly what to fix. `visual-inspection.md` tells an AI reviewer what to look at before a human sees the artifact.
 
 ## Why this exists
 
@@ -75,6 +103,10 @@ draft -> gate -> repair.md -> agent fixes -> gate again
 ```
 
 `visual-inspection.md` is the "look at it before a human sees it" packet for an AI reviewer. `loop` automates the repair cycle when you provide a repair command. The command receives environment variables such as `AI_OUTPUT_GATES_REPAIR`, `AI_OUTPUT_GATES_REPORT`, `AI_OUTPUT_GATES_VISUAL_PACKET`, `AI_OUTPUT_GATES_TARGET`, and `AI_OUTPUT_GATES_ROUND`. The package itself still makes no hidden LLM/API calls.
+
+## Why star it
+
+Star this if you are building agent workflows and want a tiny, inspectable quality gate between "the model generated it" and "a human has to catch the mistake."
 
 ## Status
 

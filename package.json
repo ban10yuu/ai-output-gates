@@ -1,0 +1,47 @@
+{
+  "name": "ai-output-gates",
+  "version": "0.1.0",
+  "description": "Artifact-specific quality gates for AI-generated books, prose, landing pages, READMEs, and code.",
+  "type": "module",
+  "homepage": "https://github.com/ban10yuu/ai-output-gates#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ban10yuu/ai-output-gates.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ban10yuu/ai-output-gates/issues"
+  },
+  "bin": {
+    "ai-output-gates": "./dist/src/cli.js"
+  },
+  "files": [
+    "dist/src",
+    "examples",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc && chmod +x dist/src/cli.js",
+    "test": "npm run build && node --test dist/test/*.test.js",
+    "check": "npm test",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "ai",
+    "quality-gate",
+    "codex",
+    "claude-code",
+    "cli",
+    "typescript",
+    "local-first"
+  ],
+  "author": "ban10yuu",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^24.0.3",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

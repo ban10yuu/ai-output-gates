@@ -38,7 +38,7 @@ export async function main(argv = process.argv.slice(2)): Promise<number> {
   }
 
   if (first === "--version" || first === "-v") {
-    process.stdout.write("0.1.1\n");
+    process.stdout.write("0.1.2\n");
     return 0;
   }
 
@@ -175,6 +175,7 @@ function runRepairCommand(command: string, options: { report: GateReport; round:
         AI_OUTPUT_GATES_REPORT: path.join(options.outDir, "gate-report.json"),
         AI_OUTPUT_GATES_REPAIR: path.join(options.outDir, "repair.md"),
         AI_OUTPUT_GATES_REVIEW_PACKET: path.join(options.outDir, "review-packet.md"),
+        AI_OUTPUT_GATES_VISUAL_PACKET: path.join(options.outDir, "visual-inspection.md"),
       },
     });
     child.on("close", (code) => resolve(code));

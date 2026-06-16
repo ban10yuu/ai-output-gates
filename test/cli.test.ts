@@ -30,6 +30,9 @@ test("CLI writes report and repair brief for failing artifact", async () => {
 
   const repair = await readFile(path.join(outDir, "repair.md"), "utf8");
   assert.match(repair, /Required Repairs/);
+
+  const visual = await readFile(path.join(outDir, "visual-inspection.md"), "utf8");
+  assert.match(visual, /AI Visual Inspection Packet/);
 });
 
 test("CLI returns zero when README passes", async () => {

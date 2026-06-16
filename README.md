@@ -65,6 +65,7 @@ Supported gates:
   SUMMARY.md
   repair.md
   review-packet.md
+  visual-inspection.md
 ```
 
 Use `repair.md` as the next prompt for the agent that produced the weak artifact. The package is designed for this loop:
@@ -73,7 +74,7 @@ Use `repair.md` as the next prompt for the agent that produced the weak artifact
 draft -> gate -> repair.md -> agent fixes -> gate again
 ```
 
-`loop` automates that cycle when you provide a repair command. The command receives environment variables such as `AI_OUTPUT_GATES_REPAIR`, `AI_OUTPUT_GATES_REPORT`, `AI_OUTPUT_GATES_TARGET`, and `AI_OUTPUT_GATES_ROUND`. The package itself still makes no hidden LLM/API calls.
+`visual-inspection.md` is the "look at it before a human sees it" packet for an AI reviewer. `loop` automates the repair cycle when you provide a repair command. The command receives environment variables such as `AI_OUTPUT_GATES_REPAIR`, `AI_OUTPUT_GATES_REPORT`, `AI_OUTPUT_GATES_VISUAL_PACKET`, `AI_OUTPUT_GATES_TARGET`, and `AI_OUTPUT_GATES_ROUND`. The package itself still makes no hidden LLM/API calls.
 
 ## Status
 

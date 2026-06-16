@@ -43,6 +43,7 @@ export async function writeReportFiles(report: GateReport, outDir: string): Prom
   await writeTextFile(path.join(outDir, "SUMMARY.md"), summaryMarkdown(report));
   await writeTextFile(path.join(outDir, "repair.md"), repairMarkdown(report));
   await writeTextFile(path.join(outDir, "review-packet.md"), reviewPacketMarkdown(report));
+  await writeTextFile(path.join(outDir, "visual-inspection.md"), visualInspectionMarkdown(report));
 }
 
 export function summaryMarkdown(report: GateReport): string {
@@ -130,4 +131,61 @@ export function reviewPacketMarkdown(report: GateReport): string {
     "- Do not approve missing structure or unclear audience.",
     "- Produce concrete repair instructions, not encouragement.",
   ].join("\n") + "\n";
+}
+
+export function visualInspectionMarkdown(report: GateReport): string {
+  const instructions = visualInstructions(report.artifactType);
+  return [
+    "# AI Visual Inspection Packet",
+    "",
+    "This is for an AI reviewer or repair agent before the artifact reaches a human. Do not ask for human approval.",
+    "",
+    `Artifact type: \`${report.artifactType}\``,
+    `Target: \`${report.target}\``,
+    `Gate status: \`${report.status}\``,
+    `Gate score: \`${report.score}/100\``,
+    "",
+    "## Visual Checks",
+    "",
+    ...instructions.map((instruction) => `- ${instruction}`),
+    "",
+    "## Decision Rule",
+    "",
+    "If the rendered artifact looks broken, generic, hard to scan, or misaligned with the user's intent, return concrete repair instructions and run the gate again.",
+  ].join("\n") + "\n";
+}
+
+function visualInstructions(type: GateReport["artifactType"]): string[] {
+  switch (type) {
+    case "book":
+      return [
+        "Render or preview the manuscript as pages or a reader view before approval.",
+        "Scan the first page, table-of-contents shape, chapter openings, repeated headings, and closing section.",
+        "Reject walls of undifferentiated text, missing chapter hierarchy, placeholder titles, and page-breaking issues.",
+      ];
+    case "prose":
+      return [
+        "Preview the final text in the medium where it will be delivered.",
+        "Check whether the opening tells the reader why this exists and whether examples are visually easy to find.",
+        "Reject copy that looks like a generic block of text with no scannable structure.",
+      ];
+    case "landing-page":
+      return [
+        "Open the page in desktop and mobile widths before approval.",
+        "Check that the first viewport shows one clear promise, a visible CTA, and no overlapping or clipped text.",
+        "Reject pages that look like stock copy, have weak contrast, hide the action, or break on mobile.",
+      ];
+    case "readme":
+      return [
+        "Preview the README as rendered Markdown.",
+        "Check that the first screen shows the project name, value, and a copyable first command.",
+        "Reject README files that require scrolling before the reader can understand what to run.",
+      ];
+    case "code":
+      return [
+        "Inspect generated reports, CLI output, and any screenshots or rendered UI produced by the code.",
+        "Check that failure output is readable, commands are copyable, and error messages point to the next action.",
+        "Reject code deliverables that pass tests but leave the user without an obvious way to verify behavior.",
+      ];
+  }
 }

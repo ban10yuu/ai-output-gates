@@ -1,24 +1,31 @@
 # Launch Assets
 
-Use these manually. Do not mass-post, auto-post, or repeat identical text across accounts.
+Use these manually. Do not mass-post, auto-post, or repeat identical text across accounts. Pick one angle, run the command once, and post with a real note about what happened.
 
 ## GitHub Description
 
-Catch weak AI-generated work before a client, reader, or user sees it.
+Local quality gates for AI-generated books, landing pages, READMEs, prose, and code.
 
 ## One-Liner
 
-`ai-output-gates` is a local CLI that checks AI-generated books, prose, landing pages, READMEs, and code before they reach a human.
+`ai-output-gates` is a local CLI that rejects weak AI-generated artifacts and writes the `repair.md` prompt the next agent should use.
+
+## Best Manual Channels
+
+- X: agent builders, Codex/Claude Code users, indie hackers shipping AI-generated sites or books
+- LinkedIn: founders and operators worried about AI work reaching clients too early
+- Hacker News: "Show HN" only if you include the local-first and no-hidden-API angle
+- Reddit: use sparingly in relevant threads; lead with the problem, not the link
 
 ## X Drafts
 
 ### Draft 1
 
-I built a tiny local CLI for a problem I keep hitting:
+I built a tiny local CLI for a problem I keep hitting with agents:
 
-AI drafts often look "done" before they have passed a human-quality check.
+AI drafts can look done before they have passed any human-quality check.
 
-`ai-output-gates` catches weak books, landing pages, READMEs, prose, and code, then writes a repair brief for the agent.
+`ai-output-gates` catches weak books, landing pages, READMEs, prose, and code, then writes the `repair.md` prompt the next agent should use.
 
 GitHub: https://github.com/ban10yuu/ai-output-gates
 
@@ -30,7 +37,7 @@ New OSS experiment:
 
 No API key, no telemetry, no human review UI.
 
-The goal is simple: stop weak AI-generated work before a client, reader, or user sees it.
+The goal is boring but useful: reject the obvious AI failures before a client, reader, or user sees them.
 
 https://github.com/ban10yuu/ai-output-gates
 
@@ -70,8 +77,14 @@ GitHub: https://github.com/ban10yuu/ai-output-gates
 
 - Show HN: ai-output-gates, local quality gates for AI-generated artifacts
 - I built a CLI that rejects weak AI-generated books, landing pages, READMEs, and code
-- A local "quality gate" between AI drafts and human review
+- A local quality gate between AI drafts and human review
+
+## Comment Reply Angles
+
+- It is not trying to replace human taste. It catches the stuff a human should not have to be the first to notice.
+- It makes no hidden LLM calls. The repair loop only runs if you provide the repair command.
+- The useful artifact is `repair.md`: a concrete prompt for the next agent pass.
 
 ## Short Reply For Comments
 
-The main idea is not to replace human taste. It is to catch obvious "a human would not ship this" failures before the human has to spend attention on them.
+The point is not to replace human taste. It catches obvious "a human should not have to be the first reviewer" failures and writes a repair prompt for the next agent pass.

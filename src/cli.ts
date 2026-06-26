@@ -9,7 +9,7 @@ import { artifactTypes, type ArtifactType, type GateReport } from "./types.js";
 
 const helpText = `ai-output-gates
 
-Artifact-specific quality gates for AI-generated work.
+Local quality gates for AI-generated books, landing pages, READMEs, prose, and code.
 
 Usage:
   ai-output-gates run <target> [--type auto|book|prose|landing-page|readme|code] [--out .ai-output-gates] [--json]
